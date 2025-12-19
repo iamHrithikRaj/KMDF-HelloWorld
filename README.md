@@ -2,6 +2,9 @@
 
 This is a basic "Hello World" Kernel-Mode Driver Framework (KMDF) driver for Windows. It demonstrates the fundamental lifecycle of a WDF driver, including `DriverEntry` and `EvtDeviceAdd`.
 
+<img width="878" height="540" alt="b4f0eebf-dd16-4bdb-9bcd-3435df164ab6" src="https://github.com/user-attachments/assets/3c1b174d-1d88-4961-a907-2b910153bdaf" />
+
+
 ## Project Structure
 
 *   **Driver.c**: Contains the main entry point (`DriverEntry`) and the device addition callback (`KmdfHelloWorldEvtDeviceAdd`).
