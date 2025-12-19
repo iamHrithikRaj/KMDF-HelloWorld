@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -21,11 +21,17 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C88B3532-7CDF-C44C-150D-CB26F18F2608}</ProjectGuid>
     <TemplateGuid>{1bc93793-694f-48fe-9372-81e2b05556fd}</TemplateGuid>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Keyword>Driver</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
     <Configuration>Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">x64</Platform>
     <RootNamespace>KmdfHelloWorld</RootNamespace>
+    <ProjectName>KmdfHelloWorld</ProjectName>
+    <Driver_Install_Rule>true</Driver_Install_Rule>
+    <DriverInstall>true</DriverInstall>
+    <ApplicationType>Driver</ApplicationType>
+    <EnableInf2cat>true</EnableInf2cat>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -34,8 +40,8 @@
     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <DriverType>KMDF</DriverType>
-    <DriverTargetPlatform>Universal</DriverTargetPlatform>
-    <TargetExt>.sys</TargetExt>
+    <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+    <KmdfVersion>1.35</KmdfVersion>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -44,8 +50,8 @@
     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <DriverType>KMDF</DriverType>
-    <DriverTargetPlatform>Universal</DriverTargetPlatform>
-    <TargetExt>.sys</TargetExt>
+    <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+    <KmdfVersion>1.35</KmdfVersion>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
@@ -54,8 +60,8 @@
     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <DriverType>KMDF</DriverType>
-    <DriverTargetPlatform>Universal</DriverTargetPlatform>
-    <TargetExt>.sys</TargetExt>
+    <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+    <KmdfVersion>1.35</KmdfVersion>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
@@ -64,9 +70,13 @@
     <PlatformToolset>WindowsKernelModeDriver10.0</PlatformToolset>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <DriverType>KMDF</DriverType>
-    <DriverTargetPlatform>Universal</DriverTargetPlatform>
-    <TargetExt>.sys</TargetExt>
+    <DriverTargetPlatform>Desktop</DriverTargetPlatform>
+    <KmdfVersion>1.35</KmdfVersion>
     <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutDir Condition="'$(OutDir)'==''">$(Platform)\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(IntDir)'==''">$(Platform)\$(Configuration)\Intermediate\</IntDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -78,15 +88,19 @@
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <TargetExt>.sys</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <TargetExt>.sys</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <TargetExt>.sys</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <DebuggerFlavor>DbgengKernelDebugger</DebuggerFlavor>
+    <TargetExt>.sys</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <DriverSign>
@@ -110,15 +124,10 @@
       <GenerateManifest>false</GenerateManifest>
       <OutputFile>$(OutDir)$(TargetName).sys</OutputFile>
     </Link>
-    
-    
     <PostBuildEvent>
-      <Command>copy &quot;KmdfHelloWorld.inf&quot; &quot;$(OutDir)KmdfHelloWorld.inf&quot;
-&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x86\Inf2Cat.exe&quot; /driver:&quot;$(OutDir).&quot; /os:10_X64</Command>
+      <Command>copy "KmdfHelloWorld.inf" "$(OutDir)KmdfHelloWorld.inf"
+"C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x86\Inf2Cat.exe" /driver:"$(OutDir)." /os:10_X64</Command>
     </PostBuildEvent>
-
-
-
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <DriverSign>
@@ -190,7 +199,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Inf Include="KmdfHelloWorld.inf" />
+    <Inf Include="KmdfHelloWorld.inf">
+      <DeploymentContent>true</DeploymentContent>
+    </Inf>
   </ItemGroup>
   <ItemGroup>
     <FilesToPackage Include="$(TargetPath)" />
@@ -198,15 +209,18 @@
   <ItemGroup>
     <ClCompile Include="Driver.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="change_platform.ps1" />
+    <None Include="fix_vcxproj.ps1" />
+    <None Include="fix_vcxproj_2.ps1" />
+    <None Include="fix_vcxproj_5.ps1" />
+    <None Include="fix_vcxproj_7.ps1" />
+    <None Include="fix_vcxproj_apptype.ps1" />
+    <None Include="fix_vcxproj_final.ps1" />
+    <None Include="fix_vcxproj_revision.ps1" />
+    <None Include="revert_vcxproj.ps1" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
 </Project>
-
-
-
-
-
-
-
-

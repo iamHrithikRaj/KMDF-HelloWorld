@@ -25,9 +25,9 @@ KmdfHelloWorld.sys = 1,,
 ;*****************************************
 
 [Manufacturer]
-%ManufacturerName% = Standard,NTamd64
+%ManufacturerName% = Standard,NTamd64.10.0...16299
 
-[Standard.NTamd64]
+[Standard.NTamd64.10.0...16299]
 %KmdfHelloWorld.DeviceDesc% = KmdfHelloWorld_Device, Root\KmdfHelloWorld ; TODO: edit hw-id
 
 [KmdfHelloWorld_Device.NT]
